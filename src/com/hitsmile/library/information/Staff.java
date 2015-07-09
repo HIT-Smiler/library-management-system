@@ -12,9 +12,8 @@ public class Staff extends Person{
 	private String password;
 	private String location;
 	
-	public Staff(String userName, String password, 
-			int id, int age, String name, String gender, String birthday,
-			String userName2, String password2, String location) {
+	public Staff(String userName, String password, int id, int age, String name, String gender, 
+			String birthday, String location) {
 		this.userName = userName;
 		this.password = password;
 		this.position = 10;
@@ -23,8 +22,6 @@ public class Staff extends Person{
 		this.name = name;
 		this.gender = gender;
 		this.birthday = birthday;
-		userName = userName2;
-		password = password2;
 		this.location = location;
 	}
 

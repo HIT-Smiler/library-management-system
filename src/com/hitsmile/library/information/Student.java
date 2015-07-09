@@ -9,17 +9,15 @@ public class Student extends Person{
 	private String name;
 	private String gender;
 	private String birthday;
-	private String userName;
-	private String password;
 	private String major;
 	private String insitute;
 	private String grade;
+	private String userName;
+	private String password;
 	
 	
-	public Student(String userName, String password, 
-			int id, int age, String name, String gender, String birthday,
-			String userName2, String password2, String major, String insitute,
-			String grade) {
+	public Student(String userName, String password, int id, int age, String name, String gender, String birthday, 
+			String major, String insitute,String grade) {
 		this.userName = userName;
 		this.password = password;
 		this.position = 11;
@@ -28,8 +26,6 @@ public class Student extends Person{
 		this.name = name;
 		this.gender = gender;
 		this.birthday = birthday;
-		userName = userName2;
-		password = password2;
 		this.major = major;
 		this.insitute = insitute;
 		this.grade = grade;
@@ -65,18 +61,6 @@ public class Student extends Person{
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
 	public String getMajor() {
 		return major;
 	}
@@ -95,6 +79,22 @@ public class Student extends Person{
 	public void setGrade(String grade) {
 		this.grade = grade;
 	}
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 
 	@Override
 	public String toString() {
@@ -104,6 +104,7 @@ public class Student extends Person{
 				+ ", major=" + major + ", insitute=" + insitute + ", grade="
 				+ grade + "]";
 	}
+
 	
 	
 }
