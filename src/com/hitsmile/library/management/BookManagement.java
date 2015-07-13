@@ -7,7 +7,7 @@ import java.util.Iterator;
 import com.hitsmile.library.information.Book;
 
 
-public class BookManagement extends Management implements Comparator<Book>{
+public class BookManagement implements Comparator<Book>{
 	
 	public static final int BOOK_ID = 0;
 	public static final int BOOK_NUM = 1;
@@ -22,32 +22,25 @@ public class BookManagement extends Management implements Comparator<Book>{
 	public static final int BOOK_PUB_COMP = 8;
 	public static final int BOOK_IN_DATE = 9;
 	
-	private int markObject = -1;
+	private static BookManagement bookManagement = new BookManagement();
+	
+	private static int markObject = -1;
 	
 	
-	private ArrayList<Book> books = new ArrayList<Book>();
-	private Iterator<Book> iterator;
+	private static ArrayList<Book> books = new ArrayList<Book>();
+	private static Iterator<Book> iterator;
 	
-	@Override
-	public boolean mAdd(Object object) {
-		if(object instanceof Book){
-		    books.add((Book)object);
-		    return true;
-		}
-		return false;
+	
+	public static boolean mAdd(Book book) {
+		return books.add(book);		    
 	}
 
-	@Override
-	public boolean mRemove(Object object) {
-		if(object instanceof Book){
-		    books.remove((Book)object);
-		    return true;
-		}
-		return false;
+	public static boolean mRemove(Book book) {
+		return books.remove(book);
 	}
 
-	@Override
-	public void mTraverse() {
+	
+	public static void mTraverse() {
 		iterator = books.iterator();
 		while(iterator.hasNext()){
 			Book book = iterator.next();
@@ -55,32 +48,30 @@ public class BookManagement extends Management implements Comparator<Book>{
 		}
 	}
 	
-
-	@Override
-	public void mSort(int mark) {
+	public static void mSort(int mark) {
 		markObject = mark;
-		books.sort(this);
+		books.sort(bookManagement);
 		markObject = -1;
 	}
 	
 
-	public ArrayList<Book> mSearch(int mark,int search){
+	public static ArrayList<Book> mSearch(int mark,int search){
 		ArrayList<Book> searchBook = new ArrayList<Book>();
 		iterator = searchBook.iterator();
 		while(iterator.hasNext()){
 			Book book = iterator.next();
 			switch(mark){
-			    case 0:
+			    case BOOK_ID:
 			    	if(book.getId() == search){
 			    		searchBook.add(book);
 			    	}
 			    	break;
-			    case 1:
+			    case BOOK_NUM:
 			    	if(book.getNum() == search){
 			    		searchBook.add(book);
 			    	}
 			    	break;
-			    case 2:
+			    case BOOK_PAGE_COUNT:
 			    	if(book.getPageCount() == search){
 			    		searchBook.add(book);
 			    	}
@@ -90,12 +81,12 @@ public class BookManagement extends Management implements Comparator<Book>{
 		return searchBook;
 	}
 	
-	public ArrayList<Book> mSearch(int mark,double search){
+	public static ArrayList<Book> mSearch(int mark,double search){
 		ArrayList<Book> searchBook = new ArrayList<Book>();
 		iterator = searchBook.iterator();
 		while(iterator.hasNext()){
 			Book book = iterator.next();
-			if(mark == 3){
+			if(mark == BOOK_PRICE){
 				if(book.getPrice() == search){
 					searchBook.add(book);
 				}
@@ -104,38 +95,38 @@ public class BookManagement extends Management implements Comparator<Book>{
 		return searchBook;
 	}
 	
-	public ArrayList<Book> mSearch(int mark,String search){
+	public static ArrayList<Book> mSearch(int mark,String search){
 		ArrayList<Book> searchBook = new ArrayList<Book>();
 		iterator = searchBook.iterator();
 		while(iterator.hasNext()){
 			Book book = iterator.next();
 			switch(mark){
-			    case 4:
+			    case BOOK_NAME:
 			    	if(book.getName().equals(search)){
 			    		searchBook.add(book);
 			    	}
 			    	break;
-			    case 5:
+			    case BOOK_AUTHOR:
 			    	if(book.getAuthor().equals(search)){
 			    		searchBook.add(book);
 			    	}
 			    	break;
-			    case 6:
+			    case BOOK_LOCATION:
 			    	if(book.getLocation().equals(search)){
 			    		searchBook.add(book);
 			    	}
 			    	break;
-			    case 7:
+			    case BOOK_PUB_DATE:
 			    	if(book.getPubDate().equals(search)){
 			    		searchBook.add(book);
 			    	}
 			    	break;
-			    case 8:
+			    case BOOK_PUB_COMP:
 			    	if(book.getPubComp().equals(search)){
 			    		searchBook.add(book);
 			    	}
 			    	break;
-			    case 9:
+			    case BOOK_IN_DATE:
 			    	if(book.getInDate().equals(search)){
 			    		searchBook.add(book);
 			    	}
@@ -156,7 +147,7 @@ public class BookManagement extends Management implements Comparator<Book>{
 	public int compare(Book arg0, Book arg1) {
 		int mark = 0;
 		switch (markObject){
-		    case 0:
+		    case BOOK_ID:
 		    	if(arg0.getId() < arg1.getId()){
 		    		mark = -1;
 		    	}else if(arg0.getId() > arg1.getId()){
@@ -165,7 +156,7 @@ public class BookManagement extends Management implements Comparator<Book>{
 		    		mark = 0;
 		    	}
 		    	break;
-		    case 1:
+		    case BOOK_NUM:
 		    	if(arg0.getNum() < arg1.getNum()){
 		    		mark = -1;
 		    	}else if(arg0.getNum() > arg1.getNum()){
@@ -174,7 +165,7 @@ public class BookManagement extends Management implements Comparator<Book>{
 		    		mark = 0;
 		    	}
 		    	break;
-		    case 2:
+		    case BOOK_PAGE_COUNT:
 		    	if(arg0.getPageCount() < arg1.getPageCount()){
 		    		mark = -1;
 		    	}else if(arg0.getPageCount() > arg1.getPageCount()){
@@ -183,7 +174,7 @@ public class BookManagement extends Management implements Comparator<Book>{
 		    		mark = 0;
 		    	}
 		    	break;
-		    case 3:
+		    case BOOK_PRICE:
 		    	if(arg0.getPrice() < arg1.getPrice()){
 		    		mark = -1;
 		    	}else if(arg0.getPrice() > arg1.getPrice()){
@@ -192,22 +183,22 @@ public class BookManagement extends Management implements Comparator<Book>{
 		    		mark = 0;
 		    	}
 		    	break;
-		    case 4:
+		    case BOOK_NAME:
 		    	mark = arg0.getName().compareTo(arg1.getName());
 		    	break;
-		    case 5:
+		    case BOOK_AUTHOR:
 		    	mark = arg0.getAuthor().compareTo(arg1.getAuthor());
 		    	break;
-		    case 6:
+		    case BOOK_LOCATION:
 		    	mark = arg0.getLocation().compareTo(arg1.getLocation());
 		    	break;		    	
-		    case 7:
+		    case BOOK_PUB_DATE:
 		    	mark = arg0.getPubDate().compareTo(arg1.getPubDate());
 		    	break;	
-		    case 8:
+		    case BOOK_PUB_COMP:
 		    	mark = arg0.getPubComp().compareTo(arg1.getPubComp());
 		    	break;	
-		    case 9:
+		    case BOOK_IN_DATE:
 		    	mark = arg0.getInDate().compareTo(arg1.getInDate());
 		    	break;	
 		}
