@@ -3,8 +3,8 @@ package com.hitsmile.library.management;
 
 public class AdministratorManagement {
 	
-	private static final String mUserName = "";
-	private static final String mPassword = "";
+	private static final String mUserName = "myAdmin";
+	private static final String mPassword = "admin";
 	
 
 	public static boolean isUser(String userName,String password){
