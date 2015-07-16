@@ -21,6 +21,7 @@ import java.awt.Scrollbar;
 
 public class StaffManage implements ActionListener {
 
+	// 结构和BookManage完全相同
 	private JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -78,6 +79,7 @@ public class StaffManage implements ActionListener {
 	private StaffMainInterface fmf;
 	private StudentsMainInterface tmf;
 	private LoginInterface lif;
+
 	/**
 	 * Launch the application.
 	 */
@@ -326,20 +328,19 @@ public class StaffManage implements ActionListener {
 		JButton button_1 = new JButton("\u8FD4\u56DE");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				if(LoginInterface.backWindowFlag == 1){
+
+				if (LoginInterface.backWindowFlag == 1) {
 					ami = new AdministratorMainInterface();
 					frame.dispose();
-					
-				}else if (LoginInterface.backWindowFlag == 2){
+
+				} else if (LoginInterface.backWindowFlag == 2) {
 					fmf = new StaffMainInterface();
 					frame.dispose();
-					
-					
-				}else if(LoginInterface.backWindowFlag == 3){
+
+				} else if (LoginInterface.backWindowFlag == 3) {
 					tmf = new StudentsMainInterface();
 					frame.dispose();
-				}else {
+				} else {
 					lif = new LoginInterface();
 					frame.dispose();
 				}

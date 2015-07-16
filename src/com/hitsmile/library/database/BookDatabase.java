@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import com.hitsmile.library.myinterface.ShowAll;
 
 public class BookDatabase {
+	// 加载JDBC驱动，同时预置mysql用户名及密码
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	static final String DB_URL = "jdbc:mysql://localhost/library";
 
@@ -19,6 +20,7 @@ public class BookDatabase {
 	private PreparedStatement pst = null;
 	private ResultSet rs = null;
 
+	
 	private ShowAll showAll;
 	private String bookSumInformation;
 
@@ -29,25 +31,28 @@ public class BookDatabase {
 			conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 
 			if (functionFlag == 1) {
-
+				// 进行添加操作
 				pst = conn.prepareStatement(sql);
 				pst.execute(sql);
 
 			} else if (functionFlag == 2) {
-
+				// 进行删除操作
 				pst = conn.prepareStatement(sql);
 				pst.execute(sql);
 
 			} else if (functionFlag == 3) {
-
+				// 进行修改操作
 				pst = conn.prepareStatement(sql);
 				pst.execute(sql);
 
 			} else if (functionFlag == 4) {
+				// 进行查询操作
 				pst = conn.prepareStatement(sql);
 				rs = pst.executeQuery(sql);
 
+				//显示查询结果的框
 				showAll = new ShowAll();
+				// 遍历所有满足条件的数据行
 				while (rs.next()) {
 					int bookid = rs.getInt("bookid");
 					int booknum = rs.getInt("booknum");

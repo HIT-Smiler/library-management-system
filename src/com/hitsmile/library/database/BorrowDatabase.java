@@ -12,6 +12,7 @@ import com.hitsmile.library.myinterface.BookManage;
 import com.hitsmile.library.myinterface.ShowAll;
 
 public class BorrowDatabase {
+	// 加载JDBC驱动，同时预置mysql用户名及密码
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	static final String DB_URL = "jdbc:mysql://localhost/library";
 
@@ -25,7 +26,7 @@ public class BorrowDatabase {
 	private ShowAll showAll;
 	private String borrowSumInformation;
 	private BookDatabase bookdatabase;
-	
+
 	public BorrowDatabase(int bookid, int id, String tempusername, String temppassword) {
 		// this.tempusername = tempusername;
 		// this.temppassword = temppassword;
@@ -35,6 +36,7 @@ public class BorrowDatabase {
 
 			conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 
+			// 借书语句，向记录已借图书的数据库中插入语句
 			String sql = "insert into library.borrow values (" + bookid + "," + id + ",'" + tempusername + "'," + "'"
 					+ temppassword + "'" + ")";
 			// System.out.println(sql);
@@ -46,13 +48,12 @@ public class BorrowDatabase {
 
 			pst.execute(sql);
 
-			JOptionPane.showMessageDialog(null,"借书成功！", "系统信息", JOptionPane.INFORMATION_MESSAGE);
-			
-			
+			// 借书成功之后，图书数据库中的剩余图书将减少1
+			JOptionPane.showMessageDialog(null, "借书成功！", "系统信息", JOptionPane.INFORMATION_MESSAGE);
+
 			sql = "update library.book set restnum = restnum - 1 where bookid = " + bookid;
 			bookdatabase = new BookDatabase(sql, 3);
-			
-			
+
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -91,6 +92,7 @@ public class BorrowDatabase {
 
 	}
 
+	// 这个重载的构造器用来查询借书情况，连接borrow数据库，将用户名、密码符合的数据行输出
 	public BorrowDatabase(String tempusername, String temppassword) {
 		// this.tempusername = tempusername;
 		// this.temppassword = temppassword;
@@ -112,7 +114,9 @@ public class BorrowDatabase {
 
 			rs = pst.executeQuery(sql);
 
+			//显示数据显示的界面
 			showAll = new ShowAll();
+			// 遍历满足条件数据行
 			while (rs.next()) {
 
 				int bookid = rs.getInt("bookid");

@@ -8,42 +8,38 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import com.hitsmile.library.myinterface.LoginInterface;
 import com.hitsmile.library.myinterface.ShowAll;
 
-public class SearchAndChangeDatabase {
+public class ReturnDatabase {
+
 	// 加载JDBC驱动，同时预置mysql用户名及密码
-	final static String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	final static String DB_URL = "jdbc:mysql://localhost/library";
+	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+	static final String DB_URL = "jdbc:mysql://localhost/library";
 
-	final static String USERNAME = "root";
-	final static String PASSWORD = "9564";
-
-	// private String tempusername = null;
-	// private String temppassword = null;
+	static final String USER = "root";
+	static final String PASSWORD = "9564";
 
 	private Connection conn = null;
 	private PreparedStatement pst = null;
 	private ResultSet rs = null;
 
 	private ShowAll showAll;
-	private String studentSumInformation;
-	private LoginInterface loginInterface;
+	private String borrowSumInformation;
+	private BookDatabase bookdatabase;
 
-	// 连接数据库为了修改数据库中的密码
-	public SearchAndChangeDatabase(String tempusername, String temppassword, String tempNewpassword) {
+	public ReturnDatabase(int bookid, int id, String tempusername, String temppassword) {
 		// this.tempusername = tempusername;
 		// this.temppassword = temppassword;
 
 		try {
 			Class.forName(JDBC_DRIVER);
 
-			conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+			conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 
-			// 更新密码的sql语句
-			String sql = new String("update library.student set password = " + tempNewpassword + " where username = "
-					+ tempusername + " and " + "password = " + temppassword);
-
+			// 借书语句，向记录已借图书的数据库中插入语句
+			String sql = "delete from library.borrow where " + "bookid = " + bookid + " and " + "borrowedstudentid = "
+					+ id + " and " + " borrowedstudentusername = " + "'" + tempusername + "'" + " and "
+					+ "borrowedstudentpassword = " + "'" + temppassword + "'";
 			// System.out.println(sql);
 			// String sql1 = "exec p_skill '"+ "AAA" +"',"+"\""+ "B" +"\"";
 			//
@@ -53,8 +49,11 @@ public class SearchAndChangeDatabase {
 
 			pst.execute(sql);
 
-			JOptionPane.showMessageDialog(null, "密码修改成功！", "系统信息", JOptionPane.INFORMATION_MESSAGE);
-			loginInterface = new LoginInterface();
+			// 借书成功之后，图书数据库中的剩余图书将减少1
+			JOptionPane.showMessageDialog(null, "还书成功！", "系统信息", JOptionPane.INFORMATION_MESSAGE);
+
+			sql = "update library.book set restnum = restnum + 1 where bookid = " + bookid;
+			bookdatabase = new BookDatabase(sql, 3);
 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -94,20 +93,18 @@ public class SearchAndChangeDatabase {
 
 	}
 
-	// 连接数据库为了查询个人信息
-
-	public SearchAndChangeDatabase(String tempusername, String temppassword) {
+	// 这个重载的构造器用来查询借书情况，连接borrow数据库，将用户名、密码符合的数据行输出
+	public ReturnDatabase(String tempusername, String temppassword) {
 		// this.tempusername = tempusername;
 		// this.temppassword = temppassword;
 
 		try {
 			Class.forName(JDBC_DRIVER);
 
-			conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+			conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
 
-			// 查询信息语句
-			String sql = new String("select * from library.student where username = " + "'" + tempusername + "'"
-					+ " and password = " + "'" + temppassword + "'");
+			String sql = new String("select * from library.borrow where borrowedstudentusername = " + "'" + tempusername
+					+ "'" + " and borrowedstudentpassword = " + "'" + temppassword + "'");
 
 			// System.out.println(sql);
 			// String sql1 = "exec p_skill '"+ "AAA" +"',"+"\""+ "B" +"\"";
@@ -117,27 +114,22 @@ public class SearchAndChangeDatabase {
 			pst = conn.prepareStatement(sql);
 
 			rs = pst.executeQuery(sql);
+
+			// 显示数据显示的界面
 			showAll = new ShowAll();
-			// 遍历
+			// 遍历满足条件数据行
 			while (rs.next()) {
-				int id = rs.getInt("id");
-				int age = rs.getInt("age");
-				String name = rs.getString("name");
-				String gender = rs.getString("gender");
-				String birthday = rs.getString("birthday");
-				String major = rs.getString("major");
-				String institute = rs.getString("institute");
-				String grade = rs.getString("grade");
-				String username = rs.getString("username");
-				String password = rs.getString("password");
 
-				studentSumInformation = "id:" + id + ",   " + "age:" + age + ",   " + "name:" + name + ",   "
-						+ "gender:" + gender + ",   " + "birthday:" + birthday + ",   " + "major:" + major + ",   "
-						+ "institute:" + institute + ",   " + "grade:" + grade + ",   " + "username:" + username
-						+ ",   " + "password:" + password;
+				int bookid = rs.getInt("bookid");
+				int borrowedstudentid = rs.getInt("borrowedstudentid");
+				String borrowedstudentusername = rs.getString("borrowedstudentusername");
+				String borrowedstudentpassword = rs.getString("borrowedstudentpassword");
 
-				showAll.addStaffInformation(studentSumInformation);
+				borrowSumInformation = "bookid:" + bookid + ",   " + "borrowedstudentid:" + borrowedstudentid + ",   "
+						+ "borrowedstudentusername:" + borrowedstudentusername + ",   " + "borrowedstudentpassword:"
+						+ borrowedstudentpassword;
 
+				showAll.addStaffInformation(borrowSumInformation);
 			}
 
 		} catch (ClassNotFoundException e) {
@@ -177,4 +169,5 @@ public class SearchAndChangeDatabase {
 		}
 
 	}
+
 }

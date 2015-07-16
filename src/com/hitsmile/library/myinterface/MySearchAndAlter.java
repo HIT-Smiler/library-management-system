@@ -24,12 +24,14 @@ public class MySearchAndAlter {
 	private JTextField textField_1;
 	private JTextField textField_2;
 
+	// 接收文本框内容
 	private String stringUsername;
 	private String stringPassword;
 	private String stringNewPassword;
 	private String sql;
 	private SearchAndChangeDatabase searchAndChangeDatabase;
 	private StudentsMainInterface studentMainInterface;
+
 	/**
 	 * Launch the application.
 	 */
@@ -87,34 +89,36 @@ public class MySearchAndAlter {
 		frame.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
 
+		// 跳转结果显示界面
 		JButton button = new JButton("\u67E5\u8BE2\u4FE1\u606F");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				stringUsername = textField.getText();
 				stringPassword = textField_1.getText();
 				// stringNewPassword = textField_2.getText();
-				
+
 				LoginInterface.showBackFlag = 4;
-				
+
 				searchAndChangeDatabase = new SearchAndChangeDatabase(stringUsername, stringPassword);
 				frame.dispose();
-				
 
 			}
 		});
 		button.setBounds(447, 119, 93, 23);
 		frame.getContentPane().add(button);
 
+		// 修改密码，底层为更改数据库
 		JButton button_1 = new JButton("\u4FEE\u6539\u5BC6\u7801");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				stringUsername = textField.getText();
 				stringPassword = textField_1.getText();
 				stringNewPassword = textField_2.getText();
-				
+
 				LoginInterface.showBackFlag = 4;
-				
-				searchAndChangeDatabase = new SearchAndChangeDatabase(stringUsername, stringPassword, stringNewPassword);
+
+				searchAndChangeDatabase = new SearchAndChangeDatabase(stringUsername, stringPassword,
+						stringNewPassword);
 
 				frame.dispose();
 
@@ -136,11 +140,11 @@ public class MySearchAndAlter {
 		JLabel label_3 = new JLabel("\u8F93\u5165\u65B0\u5BC6\u7801\uFF1A");
 		label_3.setBounds(37, 378, 111, 15);
 		frame.getContentPane().add(label_3);
-		
+
 		JButton button_2 = new JButton("\u8FD4\u56DE");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				studentMainInterface = new StudentsMainInterface();
 				frame.dispose();
 			}

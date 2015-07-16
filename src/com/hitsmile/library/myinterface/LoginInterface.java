@@ -19,7 +19,7 @@ import com.hitsmile.library.database.StaffDatabase;
 import com.hitsmile.library.database.StudentDatabase;
 
 public class LoginInterface implements ActionListener {
-	
+	// 标记变量用来检验showAll界面返回时返回哪个界面
 	public static int backWindowFlag = 0;
 	public static int showBackFlag = 0;
 
@@ -30,6 +30,7 @@ public class LoginInterface implements ActionListener {
 	private JLabel label_1;
 	private JPasswordField passwordField;
 
+	// 用于修改界面背景
 	private JPanel imagePanel;
 	private ImageIcon background;
 	private JLabel label_2;
@@ -44,9 +45,11 @@ public class LoginInterface implements ActionListener {
 	private boolean booleanStringTextField;
 	private boolean booleanStringPasswordField;
 
+	// 密码匹配以后用于界面跳转
 	private AdministratorMainInterface amf;
 	private StudentsMainInterface smf;
 	private StaffMainInterface fmf;
+
 	/**
 	 * Launch the application.
 	 */
@@ -81,6 +84,7 @@ public class LoginInterface implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 
+		// 将背景修改为指定图片
 		background = new ImageIcon("loginPicture.jpg");
 		JLabel label = new JLabel(background);
 		label.setBounds(0, 0, background.getIconWidth(), background.getIconHeight());
@@ -146,16 +150,18 @@ public class LoginInterface implements ActionListener {
 		panel.add(radioButton_2);
 
 		JButton btnNewButton = new JButton("\u767B\u9646");
+
+		// 与数据库连接用于密码匹配
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				stringTextField = textField.getText();
 				stringPasswordField = new String(passwordField.getPassword());
-				
+
 				StudentDatabase sd = new StudentDatabase(stringTextField, stringPasswordField);
 				StaffDatabase fd = new StaffDatabase(stringTextField, stringPasswordField);
-				
-//				System.out.println(sd.isResultsetIsNotNull());
+
+				// System.out.println(sd.isResultsetIsNotNull());
 
 				if ((positionFlag == 00) && (stringTextField.equals("myAdmin"))
 						&& (stringPasswordField.equals("admin"))) {
@@ -168,7 +174,7 @@ public class LoginInterface implements ActionListener {
 					smf = new StudentsMainInterface();
 					frame.dispose();
 				} else {
-					JOptionPane.showMessageDialog(null,"用户名不存在或密码输入错误！", "系统信息", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "用户名不存在或密码输入错误！", "系统信息", JOptionPane.WARNING_MESSAGE);
 				}
 
 			}
@@ -181,6 +187,7 @@ public class LoginInterface implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		// 标记变量预置
 		String selection = e.getActionCommand();
 		if (selection.equals("\u7BA1\u7406\u5458")) {
 			positionFlag = 00;
@@ -192,7 +199,7 @@ public class LoginInterface implements ActionListener {
 			positionFlag = 11;
 			backWindowFlag = 3;
 		} else {
-			
+
 		}
 
 	}

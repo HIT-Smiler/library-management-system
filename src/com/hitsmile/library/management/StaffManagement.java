@@ -1,16 +1,15 @@
 package com.hitsmile.library.management;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
 
-import com.hitsmile.library.information.Staff;
 
 public class StaffManagement {
 
+	// 用于判断选择字符串中的哪一个值
 	private int markObject = -1;
+	// 传入已知属性的内容
 	private String stringField = null;
 	private String sql;
+	// 如果传入的字符串在数据库中为整形，则需要将其转化为整形
 	private int intField;
 	private String[] fixField;
 
@@ -23,6 +22,7 @@ public class StaffManagement {
 
 		if (functionFlag == 2) {
 
+			// 删除语句
 			if (markObject >= 2) {
 				sql = "delete from library.staff where " + fixField[markObject] + " like " + "'%" + stringField + "%'";
 			} else {
@@ -33,6 +33,7 @@ public class StaffManagement {
 		} else if (functionFlag == 3) {
 
 		} else if (functionFlag == 4) {
+			// 查询语句
 			if (markObject >= 2) {
 				sql = "select * from library.staff where " + fixField[markObject] + " like " + "'%" + stringField
 						+ "%'";

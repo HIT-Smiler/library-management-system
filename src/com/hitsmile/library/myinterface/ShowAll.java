@@ -19,6 +19,7 @@ import javax.swing.JScrollBar;
 
 public class ShowAll {
 
+	// 用于显示查询结果的界面
 	private JFrame frame;
 
 	private ImageIcon background;
@@ -60,6 +61,7 @@ public class ShowAll {
 	 * Initialize the contents of the frame.
 	 */
 
+	// 向文本框中添加字符调用的方法
 	public void addStaffInformation(String staffInformaiton) {
 
 		staffArea.append(staffInformaiton + "\r\n");

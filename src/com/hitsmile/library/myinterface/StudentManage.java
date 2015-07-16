@@ -22,6 +22,7 @@ import javax.swing.JRadioButton;
 
 public class StudentManage implements ActionListener {
 
+	// 结构和BookManage完全相同
 	private JFrame frame;
 
 	private ImageIcon background;
@@ -259,7 +260,7 @@ public class StudentManage implements ActionListener {
 							+ "'" + stringGender + "'," + "'" + stringBirthday + "'," + "'" + stringMajor + "'," + "'"
 							+ stringInstitute + "'," + "'" + stringGrade + "'," + "'" + stringUsername + "'," + "'"
 							+ stringPassword + "'" + ")";
-					//System.out.println(sql);
+					// System.out.println(sql);
 					// System.out.println(stringId);
 					// System.out.println(stringAge);
 					studentDatabase = new StudentDatabase(sql, functionFlag);
@@ -272,11 +273,11 @@ public class StudentManage implements ActionListener {
 					// System.out.println(i);
 
 				} else if ((functionFlag == 3)) {
-					 conditionField = textField_10.getText();
-					 conditonContent = textField_11.getText();
-					
-					 alterField = textField_12.getText();
-					 alterContent = textField_13.getText();
+					conditionField = textField_10.getText();
+					conditonContent = textField_11.getText();
+
+					alterField = textField_12.getText();
+					alterContent = textField_13.getText();
 
 					boolean judge1 = ((conditionField.equals(stringField[0])) || conditionField.equals(stringField[1]));
 					boolean judge2 = ((alterField.equals(stringField[0])) || alterField.equals(stringField[1]));
@@ -324,19 +325,18 @@ public class StudentManage implements ActionListener {
 		button_1.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				if(LoginInterface.backWindowFlag == 1){
+				if (LoginInterface.backWindowFlag == 1) {
 					ami = new AdministratorMainInterface();
 					frame.dispose();
-					
-				}else if (LoginInterface.backWindowFlag == 2){
+
+				} else if (LoginInterface.backWindowFlag == 2) {
 					fmf = new StaffMainInterface();
 					frame.dispose();
-					
-					
-				}else if(LoginInterface.backWindowFlag == 3){
+
+				} else if (LoginInterface.backWindowFlag == 3) {
 					tmf = new StudentsMainInterface();
 					frame.dispose();
-				}else {
+				} else {
 					lif = new LoginInterface();
 					frame.dispose();
 				}
@@ -374,39 +374,39 @@ public class StudentManage implements ActionListener {
 		frame.getContentPane().add(radioButton_1);
 		frame.getContentPane().add(radioButton_2);
 		frame.getContentPane().add(radioButton_3);
-		
+
 		textField_10 = new JTextField();
 		textField_10.setBounds(544, 339, 66, 21);
 		frame.getContentPane().add(textField_10);
 		textField_10.setColumns(10);
-		
+
 		textField_11 = new JTextField();
 		textField_11.setBounds(637, 339, 66, 21);
 		frame.getContentPane().add(textField_11);
 		textField_11.setColumns(10);
-		
+
 		textField_12 = new JTextField();
 		textField_12.setBounds(544, 411, 66, 21);
 		frame.getContentPane().add(textField_12);
 		textField_12.setColumns(10);
-		
+
 		textField_13 = new JTextField();
 		textField_13.setBounds(637, 411, 66, 21);
 		frame.getContentPane().add(textField_13);
 		textField_13.setColumns(10);
-		
+
 		JLabel label_3 = new JLabel("\u66F4\u6539\u6761\u4EF6");
 		label_3.setBounds(544, 303, 54, 15);
 		frame.getContentPane().add(label_3);
-		
+
 		JLabel label_4 = new JLabel("\u6240\u6539\u5C5E\u6027");
 		label_4.setBounds(544, 386, 54, 15);
 		frame.getContentPane().add(label_4);
-		
+
 		JLabel label_5 = new JLabel("=");
 		label_5.setBounds(620, 342, 17, 15);
 		frame.getContentPane().add(label_5);
-		
+
 		JLabel label_6 = new JLabel("=");
 		label_6.setBounds(620, 414, 17, 15);
 		frame.getContentPane().add(label_6);

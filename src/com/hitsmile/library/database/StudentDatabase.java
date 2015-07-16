@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import com.hitsmile.library.myinterface.ShowAll;
 
 public class StudentDatabase {
+	// 加载JDBC驱动，同时预置mysql用户名及密码
 	final static String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	final static String DB_URL = "jdbc:mysql://localhost/library";
 
@@ -29,32 +30,38 @@ public class StudentDatabase {
 
 	public StudentDatabase(String sql, int functionFlag) {
 		try {
+			// 加载驱动器
 			Class.forName(JDBC_DRIVER);
 
 			conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
 
+			// 添加
 			if (functionFlag == 1) {
 
 				pst = conn.prepareStatement(sql);
 				pst.execute(sql);
 
+				// 删除
 			} else if (functionFlag == 2) {
 
 				pst = conn.prepareStatement(sql);
 				pst.execute(sql);
 				// rs = pst.executeQuery(sql);
 
+				// 修改
 			} else if (functionFlag == 3) {
 
 				pst = conn.prepareStatement(sql);
 				pst.execute(sql);
 
+				// 查询
 			} else if (functionFlag == 4) {
 
 				pst = conn.prepareStatement(sql);
 				rs = pst.executeQuery(sql);
 
 				showAll = new ShowAll();
+				// 遍历
 				while (rs.next()) {
 					int id = rs.getInt("id");
 					int age = rs.getInt("age");
@@ -72,6 +79,7 @@ public class StudentDatabase {
 							+ "institute:" + institute + ",   " + "grade:" + grade + ",   " + "username:" + username
 							+ ",   " + "password:" + password;
 
+					// 显示查询结果
 					showAll.addStaffInformation(studentSumInformation);
 				}
 

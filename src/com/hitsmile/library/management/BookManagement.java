@@ -1,16 +1,15 @@
 package com.hitsmile.library.management;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
 
-import com.hitsmile.library.information.Book;
 
 public class BookManagement {
 
+	// 用于判断选择字符串中的哪一个值
 	private int markObject = -1;
+	// 传入已知属性的内容
 	private String stringField = null;
 	private String sql;
+	// 如果传入的字符串在数据库中为整形，则需要将其转化为整形
 	private int intField;
 	private String[] fixField;
 
@@ -23,6 +22,7 @@ public class BookManagement {
 
 		if (functionFlag == 2) {
 
+			// 删除语句
 			if ((markObject >= 4) && (markObject <= 9)) {
 				sql = "delete from library.book where " + fixField[markObject] + " like " + "'%" + stringField + "%'";
 			} else {
@@ -33,9 +33,9 @@ public class BookManagement {
 		} else if (functionFlag == 3) {
 
 		} else if (functionFlag == 4) {
+			// 查询语句
 			if ((markObject >= 4) && (markObject <= 9)) {
-				sql = "select * from library.book where " + fixField[markObject] + " like " + "'%" + stringField
-						+ "%'";
+				sql = "select * from library.book where " + fixField[markObject] + " like " + "'%" + stringField + "%'";
 
 			} else {
 				intField = Integer.parseInt(stringField);

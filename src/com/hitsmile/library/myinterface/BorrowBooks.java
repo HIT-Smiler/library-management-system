@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.hitsmile.library.database.BorrowDatabase;
+import com.hitsmile.library.database.ReturnDatabase;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -35,12 +36,13 @@ public class BorrowBooks {
 	private String stringusername;
 	private String stringpassword;
 	private String stringId;
-	
-	private int  intBookid;
+
+	private int intBookid;
 	private int intId;
-	
+
 	private JButton button_2;
 	private BorrowDatabase borrowDatabase;
+	private ReturnDatabase returnDatabase;
 	private JTextField textField_3;
 	private JLabel lblNewLabel;
 
@@ -93,6 +95,7 @@ public class BorrowBooks {
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 
+		// 跳转到结果显示界面
 		JButton button = new JButton("\u67E5\u8BE2\u5DF2\u501F\u56FE\u4E66");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -100,14 +103,13 @@ public class BorrowBooks {
 				stringusername = textField_1.getText();
 				stringpassword = textField_2.getText();
 				LoginInterface.showBackFlag = 5;
-				
+
 				borrowDatabase = new BorrowDatabase(stringusername, stringpassword);
 				frame.dispose();
-				
 
 			}
 		});
-		button.setBounds(65, 346, 142, 23);
+		button.setBounds(65, 333, 142, 23);
 		frame.getContentPane().add(button);
 
 		textField_1 = new JTextField();
@@ -139,6 +141,8 @@ public class BorrowBooks {
 		frame.getContentPane().add(lblbookidbookid);
 
 		button_1 = new JButton("\u8FD4\u56DE");
+
+		// 借书，底层为更改数据库
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -152,36 +156,61 @@ public class BorrowBooks {
 		button_2 = new JButton("\u501F\u4E66");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				stringBookid = textField.getText();
+				stringusername = textField_1.getText();
+				stringpassword = textField_2.getText();
+				stringId = textField_3.getText();
+
+				if (!(stringBookid.equals(""))) {
+					intBookid = Integer.parseInt(stringBookid);
+				}
+				if (!(stringId.equals(""))) {
+					intId = Integer.parseInt(stringId);
+				}
+
+				borrowDatabase = new BorrowDatabase(intBookid, intId, stringusername, stringpassword);
+
+			}
+		});
+		button_2.setBounds(65, 234, 142, 23);
+		frame.getContentPane().add(button_2);
+
+		textField_3 = new JTextField();
+		textField_3.setBounds(310, 347, 129, 21);
+		frame.getContentPane().add(textField_3);
+		textField_3.setColumns(10);
+
+		lblNewLabel = new JLabel("\u8F93\u5165\u5B66\u751Fid");
+		lblNewLabel.setBounds(308, 322, 119, 15);
+		frame.getContentPane().add(lblNewLabel);
+		
+		JButton button_3 = new JButton("\u8FD8\u4E66");
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				
 				stringBookid = textField.getText();
 				stringusername = textField_1.getText();
 				stringpassword = textField_2.getText();
 				stringId = textField_3.getText();
-				
-				if(!(stringBookid.equals(""))){
+
+				if (!(stringBookid.equals(""))) {
 					intBookid = Integer.parseInt(stringBookid);
 				}
-				if(!(stringId.equals(""))){
+				if (!(stringId.equals(""))) {
 					intId = Integer.parseInt(stringId);
 				}
 				
-				borrowDatabase = new BorrowDatabase(intBookid, intId, stringusername, stringpassword);
 				
-				
-				
+				returnDatabase = new ReturnDatabase(intBookid, intId, stringusername, stringpassword);
 			}
 		});
-		button_2.setBounds(65, 234, 142, 23);
-		frame.getContentPane().add(button_2);
+		button_3.setBounds(65, 441, 142, 23);
+		frame.getContentPane().add(button_3);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(310, 347, 129, 21);
-		frame.getContentPane().add(textField_3);
-		textField_3.setColumns(10);
-		
-		lblNewLabel = new JLabel("\u8F93\u5165\u5B66\u751Fid");
-		lblNewLabel.setBounds(308, 322, 119, 15);
-		frame.getContentPane().add(lblNewLabel);
+		JLabel label_3 = new JLabel("\u8FD8\u4E66\u65F6\u56DB\u4E2A\u7A7A\u4F4D\u5FC5\u987B\u90FD\u586B");
+		label_3.setBounds(377, 507, 450, 15);
+		frame.getContentPane().add(label_3);
 		imagePanel.setOpaque(false);
 		frame.getLayeredPane().add(imagelabel, new Integer(Integer.MIN_VALUE));
 		frame.setSize(1024, 596);

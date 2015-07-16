@@ -41,7 +41,7 @@ public class BookManage implements ActionListener {
 	private ImageIcon background;
 	private JPanel imagePanel;
 	private JLabel imagelabel;
-	
+
 	private JRadioButton radioButton;
 	private JRadioButton radioButton_1;
 	private JRadioButton radioButton_2;
@@ -50,6 +50,7 @@ public class BookManage implements ActionListener {
 
 	private ButtonGroup bookButton;
 
+	// 接收文本框的输入信息
 	private String stringBookId;
 	private String stringBookNum;
 	private String stringPageCount;
@@ -63,6 +64,7 @@ public class BookManage implements ActionListener {
 	private String stringRestNum;
 	private String stringSumNum;
 
+	// 如果数据库中是整形，则将接收到的字符串转化为整形
 	private int intBookId;
 	private int intBookNum;
 	private int intPageNum;
@@ -71,12 +73,12 @@ public class BookManage implements ActionListener {
 	private int intSumNum;
 
 	private int functionFlag;
-	
+
 	private AdministratorMainInterface ami;
 	private StaffMainInterface fmf;
 	private StudentsMainInterface tmf;
 	private LoginInterface lif;
-	
+
 	private JTextField textField_12;
 	private JTextField textField_13;
 	private JTextField textField_14;
@@ -89,10 +91,12 @@ public class BookManage implements ActionListener {
 	private String sql;
 	private BookManagement bookManagement;
 
+	// 接收修改文本框的输入字符串
 	private String conditionField;
 	private String conditonContent;
 	private String alterField;
 	private String alterContent;
+
 	private JLabel label_6;
 	private JLabel label_7;
 	private JLabel label_8;
@@ -236,6 +240,7 @@ public class BookManage implements ActionListener {
 				stringRestNum = textField_10.getText();
 				stringSumNum = textField_11.getText();
 
+				// 字符串转化为整形
 				if (!(stringBookId.equals(""))) {
 					intBookId = Integer.parseInt(stringBookId);
 				}
@@ -255,10 +260,12 @@ public class BookManage implements ActionListener {
 					intSumNum = Integer.parseInt(stringSumNum);
 				}
 
+				// 储存接收到的字符串
 				stringField = new String[] { stringBookId, stringBookNum, stringPageCount, stringBookPrice,
 						stringBookName, stringBookAuthor, stringBookLocation, stringBookPubDate, stringBookPubComp,
 						stringBookInDate, stringRestNum, stringSumNum };
 
+				// 判断第几个文本框是非空
 				for (i = 0; i < 12; i++) {
 					if (!stringField[i].equals("")) {
 						stringFieldNotNull = stringField[i];
@@ -266,22 +273,24 @@ public class BookManage implements ActionListener {
 
 					}
 				}
+				// 添加
 				if (functionFlag == 1) {
 					sql = "insert into library.book values (" + intBookId + "," + intBookNum + "," + intPageNum + ","
 							+ intBookPrice + "," + "'" + stringBookName + "'," + "'" + stringBookAuthor + "'," + "'"
 							+ stringBookLocation + "'," + "'" + stringBookPubDate + "'," + "'" + stringBookPubComp
-							+ "'," + "'" +  stringBookInDate + "'," + stringRestNum + "," + stringSumNum + ")";
-					
-					
+							+ "'," + "'" + stringBookInDate + "'," + stringRestNum + "," + stringSumNum + ")";
+
 					System.out.println(sql);
 
 					bookDatabase = new BookDatabase(sql, functionFlag);
 
+					// 删除
 				} else if (functionFlag == 2) {
 					bookManagement = new BookManagement(functionFlag, stringFieldNotNull, i);
 					sql = bookManagement.getSql();
 					bookDatabase = new BookDatabase(sql, functionFlag);
 
+					// 修改
 				} else if (functionFlag == 3) {
 					conditionField = textField_12.getText();
 					conditonContent = textField_13.getText();
@@ -317,6 +326,7 @@ public class BookManage implements ActionListener {
 
 					bookDatabase = new BookDatabase(sql, functionFlag);
 
+					// 查询
 				} else if (functionFlag == 4) {
 					bookManagement = new BookManagement(functionFlag, stringFieldNotNull, i);
 					sql = bookManagement.getSql();
@@ -334,21 +344,21 @@ public class BookManage implements ActionListener {
 
 		JButton button_1 = new JButton("\u8FD4\u56DE");
 		button_1.addActionListener(new ActionListener() {
+			// 根据标记变量返回到相应的界面
 			public void actionPerformed(ActionEvent e) {
 
-				if(LoginInterface.backWindowFlag == 1){
+				if (LoginInterface.backWindowFlag == 1) {
 					ami = new AdministratorMainInterface();
 					frame.dispose();
-					
-				}else if (LoginInterface.backWindowFlag == 2){
+
+				} else if (LoginInterface.backWindowFlag == 2) {
 					fmf = new StaffMainInterface();
 					frame.dispose();
-					
-					
-				}else if(LoginInterface.backWindowFlag == 3){
+
+				} else if (LoginInterface.backWindowFlag == 3) {
 					tmf = new StudentsMainInterface();
 					frame.dispose();
-				}else {
+				} else {
 					lif = new LoginInterface();
 					frame.dispose();
 				}
@@ -469,15 +479,16 @@ public class BookManage implements ActionListener {
 		JLabel label_5 = new JLabel("=");
 		label_5.setBounds(860, 449, 15, 15);
 		frame.getContentPane().add(label_5);
-		
-		label_6 = new JLabel("\u5F53\u5B66\u751F\u64CD\u4F5C\u65F6\uFF0C\u56DB\u4E2A\u9009\u9879\u5747\u7B49\u6548\u4E8E\u67E5\u8BE2\uFF0C");
+
+		label_6 = new JLabel(
+				"\u5F53\u5B66\u751F\u64CD\u4F5C\u65F6\uFF0C\u56DB\u4E2A\u9009\u9879\u5747\u7B49\u6548\u4E8E\u67E5\u8BE2\uFF0C");
 		label_6.setBounds(700, 189, 271, 15);
 		frame.getContentPane().add(label_6);
-		
+
 		label_7 = new JLabel("\u7A7A\u4F4D\u586B\u5199\u6309\u7167\u67E5\u8BE2\u64CD\u4F5C\u7684\u89C4\u5219\u3002");
 		label_7.setBounds(676, 214, 197, 15);
 		frame.getContentPane().add(label_7);
-		
+
 		label_8 = new JLabel("\u63D0\u793A\uFF1A");
 		label_8.setBounds(676, 164, 54, 15);
 		frame.getContentPane().add(label_8);
@@ -491,9 +502,10 @@ public class BookManage implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		String selection = e.getActionCommand();
-		
-		if(LoginInterface.backWindowFlag != 3){
-			
+		// 监听ButtonGroup
+
+		if (LoginInterface.backWindowFlag != 3) {
+
 			if (selection.equals("\u6DFB\u52A0")) {
 				functionFlag = 1;
 			} else if (selection.equals("\u5220\u9664")) {
@@ -503,11 +515,11 @@ public class BookManage implements ActionListener {
 			} else if (selection.equals("\u67E5\u8BE2")) {
 				functionFlag = 4;
 			} else {
-				
+
 			}
-		}else {
+		} else {
 			functionFlag = 4;
 		}
-		
+
 	}
 }

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import com.hitsmile.library.myinterface.ShowAll;
 
 public class StaffDatabase {
+	// 加载JDBC驱动，同时预置mysql用户名及密码
 	final static String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	final static String DB_URL = "jdbc:mysql://localhost/library";
 
@@ -32,34 +33,41 @@ public class StaffDatabase {
 		// TODO Auto-generated constructor stub
 	}
 
+	// 增删改查操作所调用的构造器
 	public StaffDatabase(String sql, int functionFlag) {
 		try {
+			// 加载驱动
 			Class.forName(JDBC_DRIVER);
 
 			conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
 
+			// 添加
 			if (functionFlag == 1) {
 
 				pst = conn.prepareStatement(sql);
 				pst.execute(sql);
 
+				// 删除
 			} else if (functionFlag == 2) {
 
 				pst = conn.prepareStatement(sql);
 				pst.execute(sql);
 				// rs = pst.executeQuery(sql);
 
+				// 修改
 			} else if (functionFlag == 3) {
 
 				pst = conn.prepareStatement(sql);
 				pst.execute(sql);
 
+				// 查询
 			} else if (functionFlag == 4) {
 
 				pst = conn.prepareStatement(sql);
 				rs = pst.executeQuery(sql);
 
 				showAll = new ShowAll();
+				// 遍历
 				while (rs.next()) {
 					int id = rs.getInt("id");
 					int age = rs.getInt("age");
@@ -70,10 +78,11 @@ public class StaffDatabase {
 					String password = rs.getString("password");
 					String location = rs.getString("location");
 
-					staffSumInformation = "id:" + id + ",   " + "age:" + age + ",   " + "name:" + name + ",   " + "gender:"
-							+ gender + ",   " + "birthday:" + birthday + ",   " + "username:" + username + ",   " + "password:"
-							+ password + ",   " + "location:" + location;
-					
+					staffSumInformation = "id:" + id + ",   " + "age:" + age + ",   " + "name:" + name + ",   "
+							+ "gender:" + gender + ",   " + "birthday:" + birthday + ",   " + "username:" + username
+							+ ",   " + "password:" + password + ",   " + "location:" + location;
+
+					// 显示结果
 					showAll.addStaffInformation(staffSumInformation);
 				}
 
@@ -117,6 +126,7 @@ public class StaffDatabase {
 		}
 	}
 
+	// 用户登录时用于用户名密码匹配时调用的构造器
 	public StaffDatabase(String tempusername, String temppassword) {
 		// this.tempusername = tempusername;
 		// this.temppassword = temppassword;
